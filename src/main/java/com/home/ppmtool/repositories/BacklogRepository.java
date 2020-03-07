@@ -1,4 +1,4 @@
-package com.home.ppmtool.repository;
+package com.home.ppmtool.repositories;
 
 import com.home.ppmtool.domain.Backlog;
 import org.springframework.data.repository.CrudRepository;

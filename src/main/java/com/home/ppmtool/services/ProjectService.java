@@ -1,10 +1,10 @@
-package com.home.ppmtool.service;
+package com.home.ppmtool.services;
 
 import com.home.ppmtool.domain.Backlog;
 import com.home.ppmtool.domain.Project;
 import com.home.ppmtool.exceptions.ProjectIdException;
-import com.home.ppmtool.repository.BacklogRepository;
-import com.home.ppmtool.repository.ProjectRepository;
+import com.home.ppmtool.repositories.BacklogRepository;
+import com.home.ppmtool.repositories.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

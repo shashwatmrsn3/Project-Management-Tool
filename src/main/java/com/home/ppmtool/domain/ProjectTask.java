@@ -8,52 +8,30 @@ import java.util.Date;
 
 @Entity
 public class ProjectTask {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(updatable = false)
+    @Column(updatable = false, unique = true)
     private String projectSequence;
-    @NotBlank(message = "please inculde a project summary")
+    @NotBlank(message = "Please include a project summary")
     private String summary;
     private String acceptanceCriteria;
     private String status;
     private Integer priority;
     private Date dueDate;
-    private Date created_at;
-    private Date updated_at;
-    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.REFRESH)
-    @JoinColumn(name="backlog_id",updatable = false,nullable = false)
+    //ManyToOne with Backlog
+    @ManyToOne(fetch = FetchType.EAGER) //REMOVE REFRESH
+    @JoinColumn(name="backlog_id", updatable = false, nullable = false)
     @JsonIgnore
-    private  Backlog backlog;
-    public ProjectTask() {
-    }
+    private Backlog backlog;
 
     @Column(updatable = false)
     private String projectIdentifier;
-    @PrePersist
-    protected  void onCreate(){
-        this.created_at = new Date();
-    }
+    private Date create_At;
+    private Date update_At;
 
-    @PreUpdate
-    protected void onUpdate(){
-        this.updated_at = new Date();
-    }
-
-    @Override
-    public String toString() {
-        return "ProjectTask{" +
-                "id=" + id +
-                ", projectSequence='" + projectSequence + '\'' +
-                ", summary='" + summary + '\'' +
-                ", acceptanceCriteria='" + acceptanceCriteria + '\'' +
-                ", status='" + status + '\'' +
-                ", priority='" + priority + '\'' +
-                ", dueDate=" + dueDate +
-                ", created_at=" + created_at +
-                ", updated_at=" + updated_at +
-                ", projectIdentifier='" + projectIdentifier + '\'' +
-                '}';
+    public ProjectTask() {
     }
 
     public Long getId() {
@@ -112,20 +90,28 @@ public class ProjectTask {
         this.dueDate = dueDate;
     }
 
-    public Date getCreated_at() {
-        return created_at;
+    public String getProjectIdentifier() {
+        return projectIdentifier;
     }
 
-    public void setCreated_at(Date created_at) {
-        this.created_at = created_at;
+    public void setProjectIdentifier(String projectIdentifier) {
+        this.projectIdentifier = projectIdentifier;
     }
 
-    public Date getUpdated_at() {
-        return updated_at;
+    public Date getCreate_At() {
+        return create_At;
     }
 
-    public void setUpdated_at(Date updated_at) {
-        this.updated_at = updated_at;
+    public void setCreate_At(Date create_At) {
+        this.create_At = create_At;
+    }
+
+    public Date getUpdate_At() {
+        return update_At;
+    }
+
+    public void setUpdate_At(Date update_At) {
+        this.update_At = update_At;
     }
 
     public Backlog getBacklog() {
@@ -136,11 +122,30 @@ public class ProjectTask {
         this.backlog = backlog;
     }
 
-    public String getProjectIdentifier() {
-        return projectIdentifier;
+    @PrePersist
+    protected void onCreate(){
+        this.create_At = new Date();
     }
 
-    public void setProjectIdentifier(String projectIdentifier) {
-        this.projectIdentifier = projectIdentifier;
+    @PreUpdate
+    protected void onUpdate(){
+        this.update_At = new Date();
+    }
+
+    @Override
+    public String toString() {
+        return "ProjectTask{" +
+                "id=" + id +
+                ", projectSequence='" + projectSequence + '\'' +
+                ", summary='" + summary + '\'' +
+                ", acceptanceCriteria='" + acceptanceCriteria + '\'' +
+                ", status='" + status + '\'' +
+                ", priority=" + priority +
+                ", dueDate=" + dueDate +
+                ", backlog=" + backlog +
+                ", projectIdentifier='" + projectIdentifier + '\'' +
+                ", create_At=" + create_At +
+                ", update_At=" + update_At +
+                '}';
     }
 }
